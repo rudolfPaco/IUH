@@ -11,39 +11,33 @@ import IUH.utilitarios.Ayuda;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-import javax.swing.border.SoftBevelBorder;
 
 /**
  *
  * @author neo
  */
-public class IUPanelT extends IUPanel{
+public class IUPanelT extends JPanel{
     private IUPanel panel;
-    private IUPanelE iuTitulo;
-    private IUEtiqueta iuTexto;
+    private IUEtiqueta etiqueta;        
     private Color colorFondo = new Color(64, 64, 64);
-    private Color colorTexto = Ayuda.COLOR_LETRA;
+    private Color colorTexto = new Color(255, 255, 255);
     private boolean isBorder = false;   
 
-    private Border border = new LineBorder(Color.LIGHT_GRAY);
-    public Area areaPanel;
+    private Border border = new LineBorder(Ayuda.COLOR_BORDE);
     private int x;
-    private int altoTexto;
-    private String titulo;
+    public Area area;
     private String texto;
-    private int sizeTitulo = 0;
-    private int sizeTexto;
+    private int size = 0;
     private int posicionHorizontal;
            
     /**     
      * @param panel
-     * @param areaPanel
-     * @param altoTexto
+     * @param x
+     * @param area
      * @param texto
      * @param size
      * @param posicionHorizontal
@@ -51,13 +45,13 @@ public class IUPanelT extends IUPanel{
      * @param colorTexto
      * @param isBorder
      */
-    public IUPanelT(IUPanel panel, Area areaPanel, int altoTexto, String texto, int size, int posicionHorizontal, Color colorFondo, Color colorTexto, boolean isBorder){
-        super(panel, areaPanel, isBorder, colorFondo);
+    public IUPanelT(IUPanel panel, int x, Area area, String texto, int size, int posicionHorizontal, Color colorFondo, Color colorTexto, boolean isBorder){
+        super(null);
         this.panel = panel;
-        this.areaPanel = areaPanel;        
-        this.altoTexto = altoTexto;
-        this.titulo = texto;
-        this.sizeTitulo = size;
+        this.x = x;
+        this.area = area;
+        this.texto = texto;
+        this.size = size;
         this.posicionHorizontal = posicionHorizontal;
         this.colorFondo = colorFondo;
         this.colorTexto = colorTexto;
@@ -67,47 +61,43 @@ public class IUPanelT extends IUPanel{
     }
 
     /**
-     *
-     * @param panel
-     * @param areaPanel
-     * @param x
-     * @param altoTexto
-     * @param titulo
-     * @param texto
-     * @param sizeTitulo
-     * @param sizeTexto
-     * @param posicionHorizontal
-     * @param isBorder
+     * Panel contiene etiqueta
+     * @param panel contenedor de los componenetes
+     * @param x distancia horizontal de la Etiqueta con el Panel
+     * @param area la posicion y dimension del panel
+     * @param texto se visualizara en el componente
+     * @param size tamaño de la letra
+     * @param posicionHorizontal posicion horizontal donde se ubicara el texto de la Etiqueta
      */
-    public IUPanelT(IUPanel panel, Area areaPanel, int x, int altoTexto, String titulo, String texto, int sizeTitulo, int sizeTexto, int posicionHorizontal, boolean isBorder){
-        super(panel, areaPanel, isBorder);
+    public IUPanelT(IUPanel panel, int x, Area area, String texto, int size, int posicionHorizontal){
+        super(null);
         this.panel = panel;
-        this.areaPanel = areaPanel;
         this.x = x;
-        this.altoTexto = altoTexto;
-        this.titulo = titulo;
+        this.area = area;
         this.texto = texto;
-        this.sizeTitulo = sizeTitulo;
-        this.sizeTexto = sizeTexto;
+        this.size = size;
         this.posicionHorizontal = posicionHorizontal;        
-        this.isBorder = isBorder;
         
         construirPanel();
-        this.titulo = titulo;
     }
     private void construirPanel(){
+        panel.agregar(this, area);
+        setFocusable(false);        
+        setBackground(colorFondo);        
+        etiqueta = new IUEtiqueta(texto);
+        etiqueta.setLayout(null);
+        etiqueta.setBounds(x, 0, getWidth() - x*2, getHeight());
+        etiqueta.setForeground(colorTexto);        
+        etiqueta.setHorizontalAlignment(posicionHorizontal);
         
-        iuTitulo = new IUPanelE(this, x, new Area(x, x, area.An() - x*2, area.AlP(altoTexto)), titulo, sizeTitulo, posicionHorizontal);        
-        iuTexto = new IUEtiqueta(this, texto, new Area(x, area.AlP(altoTexto), area.An() - x*2, area.AlP(100 - altoTexto)), sizeTexto, SwingConstants.LEFT, false);
-        
-        if(sizeTitulo != 0)
-            iuTitulo.setFont(Ayuda.FONT(sizeTitulo));
+        if(size != 0)
+            etiqueta.setFont(Ayuda.FONT(size));
         
         if(isBorder){
             setBorder(border);
         }
         
-        add(iuTitulo);
+        add(etiqueta);
     }   
     
     public void agregar(JComponent componente, Area area){
@@ -115,10 +105,16 @@ public class IUPanelT extends IUPanel{
         add(componente);        
     }    
     public void setColores(Color colorTexto, Color colorFondo){
-        iuTitulo.setForeground(colorTexto);
+        etiqueta.setForeground(colorTexto);
         setBackground(colorFondo);
     }
     public void setFuente(Font fuente){
-        iuTitulo.setFont(fuente);
+        etiqueta.setFont(fuente);
+    }
+    public String getTexto(){
+        return etiqueta.getText();
+    }
+    public void setTexto(String texto){
+        etiqueta.setText(texto);
     }
 }

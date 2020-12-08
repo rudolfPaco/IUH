@@ -8,7 +8,6 @@ package IUH.botones;
 import IUH.paneles.IUPanel;
 import IUH.utilitarios.Area;
 import IUH.utilitarios.Ayuda;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
@@ -18,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.KeyStroke;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
 
 /**
  *
@@ -95,12 +95,14 @@ public class IUBoton extends JButton {
         setVerticalTextPosition(positionTextV);
         setIconTextGap(distanciaTextIcon);
         setMnemonic(mnemonic);
+        setForeground(Ayuda.COLOR_LETRA);
         panel.agregar(this, area);
         
         if(sizeText == 0)
             setFont(Ayuda.FUENTE);
         else
             setFont(Ayuda.FONT(sizeText));
+        
         if (!urlImagen.isEmpty()) {
             setIcon(new ImageIcon(new ImageIcon(getClass().getResource(urlImagen)).getImage().getScaledInstance(sizeIcon, sizeIcon, Image.SCALE_SMOOTH)));
         }

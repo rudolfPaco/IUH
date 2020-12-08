@@ -9,13 +9,25 @@ package main;
 import IUH.botones.IUBoton;
 import IUH.botones.IUBotonCheckBox;
 import IUH.botones.IUBotonRadio;
+import IUH.campoTexto.IUAreaTexto;
+import IUH.campoTexto.IUCampoTexto;
+import IUH.comboBox.IUComboBox;
+import IUH.etiquetas.IUEtiquetaI;
 import IUH.paneles.IUPanel;
-import IUH.paneles.IUPanelE;
+import IUH.paneles.IUPanelIC;
+import IUH.paneles.IUPanelIP;
 import IUH.paneles.IUPanelT;
+import IUH.paneles.IUPanelTA;
+import IUH.paneles.IUPanelTC;
+import IUH.paneles.IUPanelTP;
+import IUH.paneles.IUPanelTT;
+import IUH.tabla.IUTabla;
+import IUH.tabla.ModeloTabla;
 import IUH.utilitarios.Area;
 import IUH.utilitarios.Ayuda;
 import IUH.ventanas.IUPrincipal;
 import IUH.ventanas.IUSecundario;
+import IUH.ventanas.IUVentana;
 import com.jtattoo.plaf.BaseBorders;
 import com.jtattoo.plaf.acryl.AcrylBorders;
 import com.jtattoo.plaf.texture.TextureBorders;
@@ -24,6 +36,7 @@ import com.sun.java.swing.plaf.windows.WindowsBorders;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -33,6 +46,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
 
 
@@ -58,47 +73,80 @@ public class Principal {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        IUPrincipal sec = new IUPrincipal("Titulo de la Ventana", "/img/tienda.png");
         
-        Area a = new Area(2, 2, (sec.An()-10)/10, (sec.Al()-4)/10);
-        Area a1 = new Area(2, 2, (sec.An()-10)/10, (sec.Al()-4)/20);
-        Area a2 = new Area(4, a.Al(3), (sec.An()-16), (sec.Al()-12)/2);
+        IUPrincipal sec = new IUPrincipal("HOTEL FELIPEZ  Su Amigo de Siempre...", "/img/hotel.png");
         
-        IUPanel panel1 = new IUPanel(sec, new Area(a.X(1), a.Y(1), a.An(1), a.Al(1)), true);
-        IUPanel panel2 = new IUPanel(sec, new Area(a.X(2) + a.An(1), a.Y(1), a.An(1), a.Al(1)), true);
-        IUPanel panel3 = new IUPanel(sec, new Area(a.X(3) + a.An(2), a.Y(1), a.An(1), a.Al(1)), true);
-        IUPanel panel5 = new IUPanel(sec, new Area(a.X(4) + a.An(3), a.Y(1), a.An(1), a1.Al(1)), true);
-        IUPanel panel6 = new IUPanel(sec, new Area(a.X(5) + a.An(4), a.Y(1), a.An(1), a.Al(1)), true);
+        Area a = new Area(0, 0, sec.An()-6, sec.Al()-35);
         
-        IUPanel panel7 = new IUPanel(sec, new Area(a.X(6) + a.An(5), a.Y(1), a.An(1), a1.Al(1)), true);
+        IUPanel panel = new IUPanel(sec, a, true);
         
-        IUPanel panel = new IUPanel(sec, a2, false);
+        Area ap = new Area(2, 2, panel.area.An() - 10, panel.area.Al() - 10);
         
+        IUPanelTT pa = new IUPanelTT(panel, new Area(ap.X(4), ap.Y(3), ap.AnP(20), ap.AlP(7)), 4, 3, 30, "hola este es mi panelT", "letras del texto", 12, 16, SwingConstants.LEFT, SwingConstants.LEFT, Ayuda.COLOR_FONDO, Color.white);
         
-        
-        Area a3 = new Area(4, 4, (panel.area.An()-10)/10, (panel.area.Al()-4)/14);
-        
-        IUPanelT pa = new IUPanelT(panel, new Area(200, 100, 300, 50), 4, 40, "hola este es mi panelT", "letras del texto", 12, 16, SwingConstants.LEFT, true);
-        
-        //IUBoton boton1 = new IUBoton(panel, new Area(a3.X(), a3.Y(), a3.An(), a3.Al()), "usuario", "/img/user.png", 14, 20, 15, SwingConstants.RIGHT, SwingConstants.CENTER, 'u', "boton usuario");
+        IUBoton boton1 = new IUBoton(panel, new Area(ap.X(5) + ap.AnP(20), ap.Y(3) + ap.AlP(2), ap.AnP(5), ap.AlP(8)), "usuario", "/img/user.png", 12, 30, 3, SwingConstants.CENTER, SwingConstants.BOTTOM, 'u', "boton usuario");
+        IUPanelTA iuTA = new IUPanelTA(panel, new Area(ap.X(5) + ap.AnP(30), ap.Y(3) + ap.AlP(2), ap.AnP(20), ap.AlP(20)), 3, 3, 15, "titulo del panel area texto", 10, "solo texto", 12, 16, SwingConstants.LEFT, null, Ayuda.COLOR_LETRA);
+        ArrayList<String> opciones = new ArrayList<>();
+        opciones.add("inicio");
+        opciones.add("segundo");
+        opciones.add("tercero");
+        IUComboBox iuC = new IUComboBox(panel, opciones, new Area(ap.X(6) + ap.AnP(60), ap.Y(3) + ap.AlP(10), ap.AnP(20), ap.AlP(5)), 16, 10);
+        //IUAreaTexto iuArea = new IUAreaTexto(panel, new Area(ap.X(5) + ap.AnP(30), ap.Y(3) + ap.AlP(2), ap.AnP(20), ap.AlP(20)), "", 16, 10, false);
         //boton1.setBorder(new TextureBorders.ButtonBorder());
-        IUBoton boton2 = new IUBoton(panel, new Area(a3.X(2) + a3.An(3), a3.Y(), a3.An(), a3.Al()), "usuario", "/img/user.png", 14, 20, 15, SwingConstants.RIGHT, SwingConstants.CENTER, 'u', "boton usuario");
+        //IUBoton boton2 = new IUBoton(panel, new Area(panel.area.X(2) + panel.area.AnP(5), panel.area.Y(), panel.area.AnP(20), panel.area.AlP(5)), "usuario", "/img/user.png", 14, 20, 15, SwingConstants.RIGHT, SwingConstants.CENTER, 'u', "boton usuario");
         //boton2.setBorder(new TextureBorders.TextFieldBorder());
         
-        IUPanelE iuTitulo = new IUPanelE(panel, 4, new Area(panel.area.X(), panel.area.Y(), panel.area.AnP(20), panel.area.AlP(10)), "Titulo de la ventana: ", 20, SwingConstants.CENTER);
+        IUPanelT iuTitulo = new IUPanelT(panel, 4, new Area(ap.X(), ap.Y(2) + ap.AlP(30), ap.AnP(20), ap.AlP(10)), "Titulo de la ventana: ", 20, SwingConstants.CENTER);
         
-        IUBotonCheckBox check = new IUBotonCheckBox(panel, new Area(a3.X(5), a3.Y(2) + a3.Al(2), a3.An(), a3.Al()), "Titulo de ventana", true);
+        IUPanelIC iuIC = new IUPanelIC(panel, new Area(ap.X(2) + ap.AnP(30), ap.Y(2) + ap.AlP(30), ap.AnP(20), ap.AlP(5)), 4, 3, 14, "src/img/user.png", 16, SwingConstants.LEFT, "username");
+        
+        IUCampoTexto iuCampo = new IUCampoTexto(panel, new Area(ap.X(2), ap.Y(3) + ap.AlP(50), ap.AnP(30), ap.AnP(2)), "", 14, SwingConstants.RIGHT);
+        iuCampo.setRestriccionDosDecimales();
+        //iuC.setEditar(false);
+        
+        IUPanelTC iuTC = new IUPanelTC(panel, new Area(ap.X(4) + ap.AnP(50), ap.Y(2) + ap.AlP(28), ap.AnP(20), ap.AlP(7)), 4, 3, 40, "tipo de moneda (Bolivianos/Dolares)", 10, "", 12, 18, SwingConstants.LEFT, SwingConstants.LEFT, null, Ayuda.COLOR_FONDO, "");
+        iuTC.iuCampo.setRestriccionDosDecimales();
+        
+        IUPanelTP iuTP = new IUPanelTP(panel, new Area(ap.X(5) + ap.AnP(70), ap.Y(2) + ap.AlP(28), ap.AnP(20), ap.AlP(7)), 4, 3, 40, "tipo de moneda (Bolivianos/Dolares)", 10, 12, 16, SwingConstants.LEFT, null, Ayuda.COLOR_FONDO, "");
+        
+        IUPanelIP iuIP = new IUPanelIP(panel, new Area(ap.X(2) + ap.AnP(30), ap.Y(2) + ap.AlP(50), ap.AnP(20), ap.AlP(5)), 4, 3, 14, "src/img/bloqueado.png", 16, SwingConstants.LEFT, 10, "password...");
+        
+        IUBotonCheckBox check = new IUBotonCheckBox(panel, new Area(ap.X(2) + ap.AnP(60), ap.Y(), ap.AnP(20), ap.AlP(10)), "Titulo de ventana", true);
         check.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if(check.isSelected()){
-                    IUSecundario iuS = new IUSecundario(sec, "ventana secundaria", "grande");
+                    IUVentana iuS = new IUVentana("pequeno");
+                    Area a = new Area(0, 0, iuS.An()-6, iuS.Al()-35);
+                    IUPanel pan = new IUPanel(iuS, a, false);
+                    pan.setBackground(Ayuda.COLOR_FOCO);
+                    
+                    IUEtiquetaI icon = new IUEtiquetaI(pan, new Area(50, 50, 300, 200), "src/img/felipez.png");
+                    
                     iuS.mostrarVentana();
                 }
             }
         });
         
-        IUBotonRadio radio = new IUBotonRadio(panel, new Area(a3.X(), a3.Y(5) + a3.Al(4), a3.An(2), a3.Al()), "pelotas en venta", false);
+        IUBotonRadio radio = new IUBotonRadio(panel, new Area(ap.X(3) + ap.AnP(40), ap.Y(1) + ap.AlP(40), ap.AnP(20), ap.AlP(10)), "pelotas en venta", false);
+        
+        IUTabla iuTabla = new IUTabla(panel, 
+        new Area(ap.X(3) + ap.AnP(70), ap.Y(1) + ap.AlP(40), ap.AnP(20), ap.AlP(10)), 
+        new String[]{"Nombre", "Apellido", "Ciudad", "Pais"}, 
+        new Class[]{String.class, String.class, String.class, String.class}, 
+        new int[]{25, 25, 25, 25}, 
+        opciones, 
+        new ModeloTabla<String>(){
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                switch(columnIndex){
+                    case 0:
+                        return lista.get(rowIndex);
+                    default:
+                        return null;
+                }
+            }
+        });
         
         sec.setVisible(true);
         /*IUSecundario sec = new IUSecundario(p, "ventana secundaria", "intermedio");

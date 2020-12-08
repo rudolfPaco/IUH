@@ -49,6 +49,7 @@ public class IUPrincipal extends JFrame{
         contenedor = new IUPanel();        
         contenedor.setBounds(0, 0, area.An()-7, area.Al()-28);
         //add(contenedor);
+        //Area a = new Area(0, 0, sec.An()-6, sec.Al()-35);
         
         
     }

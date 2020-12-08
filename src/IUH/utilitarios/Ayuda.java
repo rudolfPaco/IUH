@@ -18,6 +18,9 @@ public class Ayuda {
     public static final Color COLOR_FONDO = new Color(64, 64, 64);
     public static final Color COLOR_LETRA = new Color(32, 32, 32);
     public static final Color COLOR_BORDE = new Color(64, 64, 64);
+    public static final Color COLOR_LINEA = new Color(230, 191, 116);
+    public static final Color COLOR_FOCO = new Color(255, 250, 212);
+    
     
     public static Font FONT(int size){
         return new Font("Monospaced 13", Font.PLAIN, size);

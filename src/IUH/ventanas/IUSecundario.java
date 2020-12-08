@@ -10,7 +10,6 @@ import IUH.utilitarios.Area;
 import IUH.utilitarios.Ayuda;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;

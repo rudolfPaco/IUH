@@ -9,6 +9,7 @@ import IUH.utilitarios.Area;
 import IUH.utilitarios.Ayuda;
 import IUH.ventanas.IUPrincipal;
 import IUH.ventanas.IUSecundario;
+import IUH.ventanas.IUVentana;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JComponent;
@@ -22,8 +23,9 @@ import javax.swing.border.LineBorder;
  * @author neo
  */
 public class IUPanel extends JPanel{
-    private IUPrincipal ventana;
+    private IUPrincipal principal;
     private IUSecundario secundario;
+    private IUVentana ventana;
     private IUPanel panel;
         
     private Color colorFondo = null;
@@ -38,6 +40,23 @@ public class IUPanel extends JPanel{
     
     /**
      *
+     * @param ventana
+     * @param area
+     * @param isBorde
+     */
+    public IUPanel(IUVentana ventana, Area area, boolean isBorde){
+        super(null);
+        this.ventana = ventana;
+        this.panel = null;
+        this.principal = null;
+        this.area = area;
+        this.isBorde = isBorde;
+        this.colorFondo = Color.WHITE;
+        construirPanel();        
+    }
+    
+    /**
+     *
      * @param secundario
      * @param area
      * @param isBorde
@@ -46,7 +65,7 @@ public class IUPanel extends JPanel{
         super(null);
         this.secundario = secundario;
         this.panel = null;
-        this.ventana = null;
+        this.principal = null;
         this.area = area;
         this.isBorde = isBorde;
         this.colorFondo = Color.WHITE;
@@ -61,7 +80,7 @@ public class IUPanel extends JPanel{
      */
     public IUPanel(IUPrincipal ventana, Area area, boolean isBorde){
         super(null);
-        this.ventana = ventana;
+        this.principal = ventana;
         this.panel = null;
         this.secundario = null;
         this.area = area;
@@ -78,7 +97,7 @@ public class IUPanel extends JPanel{
         super(null);
         this.panel = panel;
         this.area = area;
-        this.ventana = null;
+        this.principal = null;
         this.secundario = null;
         this.isBorde = addBorde;
         
@@ -96,7 +115,7 @@ public class IUPanel extends JPanel{
         super(null);
         this.panel = panel;
         this.area = area;
-        this.ventana = null;
+        this.principal = null;
         this.secundario = null;
         this.isBorde = addBorde;
         this.colorFondo = colorFondo;
@@ -104,11 +123,14 @@ public class IUPanel extends JPanel{
         construirPanel();        
     }
     private void construirPanel(){
-        if(ventana != null){            
-            ventana.agregar(this, area);
+        if(principal != null){            
+            principal.agregar(this, area);
         }
         if(secundario != null){            
             secundario.agregar(this, area);
+        }
+        if(ventana != null){            
+            ventana.agregar(this, area);
         }
         if(panel != null){            
             panel.agregar(this, area);
